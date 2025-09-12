@@ -1,13 +1,17 @@
-:root {
-  padding: 0;
+body {
+  padding: 0 20px;
   margin: 0;
   box-sizing: border-box;
 }
 
 .box {
-  /* width: 24px; */
+  width: 24px;
   height: 24px;
   background: red;
+}
+
+main {
+  width: 100vw;
 }
 
 button {
@@ -19,4 +23,27 @@ button {
   &:hover {
     background-color: beige;
   }
+}
+
+#floating-container {
+  display: grid;
+  grid-template: "container";
+  place-items: center;
+  place-content: center;
+  overflow: hidden;
+  width: 100%;
+  border: 1px solid grey;
+  padding: 12px;
+}
+
+#floating-container * {
+  grid-area: container;
+}
+
+.floating-box {
+  /* position: absolute; */
+  inset: 0;
+  width: 24px;
+  height: 24px;
+  background-color: blue;
 }

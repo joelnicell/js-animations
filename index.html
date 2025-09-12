@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <h1>Animation techniques for the web</h1>
+    <h2>Example 1: Javascript updates css</h2>
+    <p>In this example, the box's css style attribute is being updated inside of an animation loop inside of Javascript.</p>
+    <div class="box" id="box"></div>
+    <p>Here is the code snippet:</p>
+    <code class="code-snippet">
+        const box = document.getElementById("box");
+
+        let value = 0;
+        function animate(t) {
+            value = Math.sin(t * 0.001) * 40 + 100;
+            box.style.width =  `${value}px`;
+            requestAnimationFrame((t) => animate(t))
+        }
+
+        animate();
+    </code>
+		<p>What are the pros to this approach?</p>
+
+		<li>
+			<ul>Updates are controlled by the well understood and easy-to-understand animation cycle</ul>
+			<ul>State is controlled inside of animation cycle.</ul>
+			<ul>Easy to manage animation cycle, and is relatively easy to inject interactivity with event listeners etc. in vanilla JS</ul>
+			<ul>One line of code is directly impacting css, so is native</ul>
+		</li>
+
+		<p>What are the cons to this approach?</p>
+		<li>
+			<ul>Value's constantly changing in the DOM tree. Opening the command palette sees updates occuring regularly</ul>
+			<ul>The threading inside of a single animation loop is singular, even though the loop itself is asynchronous. This means animations could slow down</ul>
+		</li>
+</body>
+</html>

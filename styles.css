@@ -1,5 +1,5 @@
 body {
-  padding: 0 20px;
+  padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
@@ -14,6 +14,11 @@ main {
   width: 100vw;
 }
 
+section {
+  margin-bottom: 10rem;
+  width: 100%;
+}
+
 button {
   display: unset;
   border: 1px solid black;
@@ -25,6 +30,8 @@ button {
   }
 }
 
+/* javascript floating example */
+
 #floating-container {
   display: grid;
   grid-template: "container";
@@ -34,6 +41,11 @@ button {
   width: 100%;
   border: 1px solid grey;
   padding: 12px;
+  margin: 40px;
+}
+
+#floating-title {
+  user-select: none;
 }
 
 #floating-container * {

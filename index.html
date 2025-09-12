@@ -11,10 +11,10 @@
 	<main>
     <h1>Animation techniques for the web</h1>
 		<p>The tick boxes for effective websites with animations are:</p>
-		<li>
-			<ul>Highly semantic</ul>
-			<ul>Fast</ul>
-		</li>
+		<ul>
+			<li>Highly semantic</li>
+			<li>Fast</li>
+		</ul>
 		<p>We can rate each of these approaches to see how well they match up in these areas. As well as seeing the animating power of each approach.</p>
 		<section>
 			<h2>Example 1: Javascript updates css</h2>
@@ -37,20 +37,21 @@
 			</pre>
 			<p>What are the pros to this approach?</p>
 	
-			<li>
-				<ul>Updates are controlled by the well understood and easy-to-understand animation cycle</ul>
-				<ul>State is controlled inside of animation cycle.</ul>
-				<ul>One line of code is directly impacting html css, so not only is the processing 'native', but also keeps semantic relationships in tact</ul>
-				<ul>Easy to manage animation cycle, and is relatively easy to inject interactivity with event listeners etc. in vanilla JS</ul>
-				<ul>Not re-writing HTML, only changing styles via css</ul>
-			</li>
+			<ul>
+				<li>Updates are controlled by the well understood and easy-to-understand animation cycle</li>
+				<li>State is controlled inside of animation cycle.</li>
+				<li>One line of code is directly impacting html css, so not only is the processing 'native', but also keeps semantic relationships in tact</li>
+				<li>Easy to manage animation cycle, and is relatively easy to inject interactivity with event listeners etc. in vanilla JS</li>
+				<li>Not re-writing HTML, only changing styles via css</li>
+			</ul>
 	
 			<p>What are the cons to this approach?</p>
-			<li>
-				<ul>Value's constantly changing in the DOM tree. Opening the command palette sees updates occuring regularly</ul>
-				<ul>limited by the styling of css. Stays within the 'box' model.</ul>
-				<ul>The threading inside of a single animation loop is singular, even though the loop itself is asynchronous. This means animations could slow down</ul>
-			</li>
+			<ul>
+				<li>Value's constantly changing in the DOM tree. Opening the command palette sees updates occuring regularly</li>
+				<li>limited by the styling of css. Stays within the 'box' model.</li>
+				<li>The threading inside of a single animation loop is singular, even though the loop itself is asynchronous. This means animations could slow down</li>
+				<li>everything has to be organised inside of the single animation frame.</li>
+			</ul>
 	
 			<h3>Keeping semantics in tact:</h3>
 			<button class="example-one" id="button-eg-one">Try and click me!</button>
@@ -63,7 +64,7 @@
 			<!-- Fake Sphere example -->
 
 			<div id="floating-container">
-				<h4>Important title</h4>
+				<h4 id="floating-title">Drag inside the box from left to right</h4>
 				<div class="box floating-box"></div>
 				<div class="box floating-box"></div>
 				<div class="box floating-box"></div>

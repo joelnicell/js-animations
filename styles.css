@@ -1,7 +1,19 @@
+
+/* .inter-font {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+} */
+
 body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .box {
@@ -14,9 +26,14 @@ main {
   width: 100vw;
 }
 
+article {
+  /* width: 100%; */
+  max-width: 720px;
+  margin: 0 auto 20rem auto;
+}
+
 section {
-  margin-bottom: 10rem;
-  width: 100%;
+  margin-bottom: 4rem;
 }
 
 button {
@@ -58,4 +75,23 @@ button {
   width: 24px;
   height: 24px;
   background-color: blue;
+}
+
+/* motion section */
+
+.in-view-box {
+  width: 100px;
+  height: 100px;
+  background-color: lightblue;
+  margin: 12px;
+  opacity: 0;
+}
+
+.motion-text {
+  opacity: 0;
+}
+
+.animate-text {
+  opacity: 0;
+  transform: translate(-20px, 0);
 }

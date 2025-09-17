@@ -4,73 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./script.js" defer></script>
+		<!-- <script type="module">
+			import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
+		</script> -->
+    <script src="./scripts/raf-script.js" defer type="module"></script>
+    <script src="./scripts/motion-script.js" defer type="module"></script>
+    <script src="./scripts/animate-script.js" defer type="module"></script>
     <link rel="stylesheet" href="./styles.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 	<main>
-    <h1>Animation techniques for the web</h1>
-		<p>The tick boxes for effective websites with animations are:</p>
-		<ul>
-			<li>Highly semantic</li>
-			<li>Fast</li>
-		</ul>
-		<p>We can rate each of these approaches to see how well they match up in these areas. As well as seeing the animating power of each approach.</p>
-		<section>
-			<h2>Example 1: Javascript updates css</h2>
-			<p>In this example, a box div is having it's css style attribute updated by an animation loop from Javascript.</p>
-			<div class="box example-one" id="box-eg-one"></div>
-			<p>Here is the code snippet:</p>
-			<pre>
-				<code class="code-snippet">
-						const box = document.getElementById("box");
-		
-						let value = 0;
-						function animate(t) {
-							value = Math.sin(t * 0.001) * 40 + 100;
-							box.style.width = `${value}px`;
-							requestAnimationFrame((t) => animate(t))
-						}
-		
-						animate();
-				</code>
-			</pre>
-			<p>What are the pros to this approach?</p>
-	
-			<ul>
-				<li>Updates are controlled by the well understood and easy-to-understand animation cycle</li>
-				<li>State is controlled inside of animation cycle.</li>
-				<li>One line of code is directly impacting html css, so not only is the processing 'native', but also keeps semantic relationships in tact</li>
-				<li>Easy to manage animation cycle, and is relatively easy to inject interactivity with event listeners etc. in vanilla JS</li>
-				<li>Not re-writing HTML, only changing styles via css</li>
-			</ul>
-	
-			<p>What are the cons to this approach?</p>
-			<ul>
-				<li>Value's constantly changing in the DOM tree. Opening the command palette sees updates occuring regularly</li>
-				<li>limited by the styling of css. Stays within the 'box' model.</li>
-				<li>The threading inside of a single animation loop is singular, even though the loop itself is asynchronous. This means animations could slow down</li>
-				<li>everything has to be organised inside of the single animation frame.</li>
-			</ul>
-	
-			<h3>Keeping semantics in tact:</h3>
-			<button class="example-one" id="button-eg-one">Try and click me!</button>
-			<p>This example seems to have a pretty tight relationship between a user's interaction with the page, and the state of the animation.</p>
+		<article>
+			<section>
+				<h1>Animation techniques for the web</h1>
+				<p>The tick boxes for effective websites with animations are:</p>
+				<ul>
+					<li>Highly semantic</li>
+					<li>Fast page load</li>
+					<li>Fast and intuitive developer experience - we want to fine tune and iterate quickly for creative tasks</li>
+				</ul>
+				<p>We can rate each of these approaches to see how well they match up in these areas. As well as seeing the animating power of each approach.</p>
+			</section>
+
+			<section id="section-raf">
+				<h2>Example 1: requestAnimationFrame</h2>
+				<p>In this example, a box div is having it's css style attribute updated by an animation loop from values calculated inside requestAnimationFrame</p>
+				<div class="box example-one" id="box-eg-one"></div>
+				<p>Here is the code snippet:</p>
+				<pre>
+					<code class="code-snippet">
+							const box = document.getElementById("box");
 			
-			<h3>Final review:</h3>
-			<p>This approach seems <strong>ideal</strong> for interactive animated elements. Not only because it ticks semantic boxes in it's purest sense, but also because in general, interactive elements (buttons, scrolling events etc.) should not be over-complicated by animations anyway. The button above is already really annoying for users to try and click. Why would you want MORE animation on an interactive element?</p>
-			<p>I think if this technique can be pushed to it's limits, then it could prove highly effective.</p>
+							let value = 0;
+							function animate(t) {
+								value = Math.sin(t * 0.001) * 40 + 100;
+								box.style.width = `${value}px`;
+								requestAnimationFrame((t) => animate(t))
+							}
+			
+							animate();
+					</code>
+				</pre>
+				<p>This seems to be the most 'low-level' approach, in that, most other update methods tap into the <code>requestAnimationFrame</code> architecture. </p>
+				<p>Upon attempting some simple examples with this approach, it became obvious that this is NOT a very ideal approach. You are keeping animation variables and state inside of Javascript, and unless you are actively using JavaScript for calculations, this is definitely a pain.</p>
+				<p>Incredibly, I originally thought this was an effective method of doing animations. However since this approach is just raw numbers manipulating css, it's not very inspiring, or intuitive, just a more difficult way to do css.</p>
+				
+				<p>What are the pros to this approach?</p>
+				<ul>
+					<li>Updates are controlled by the well understood and easy-to-understand animation cycle</li>
+					<li>State is controlled inside of animation cycle.</li>
+					<li>has a strong relationship to semantics, and 
+					</li>
+				</ul>
+		
+				<p>What are the cons to this approach?</p>
+				<ul>
+					<li>Value's constantly changing in the DOM tree. Opening the command palette sees updates occuring regularly</li>
+					<li>limited by the styling of css. Stays within the 'box' model.</li>
+					<li>The threading inside of a single animation loop is singular, even though the loop itself is asynchronous. This means animations could slow down</li>
+					<li>everything has to be organised inside of the single animation frame.</li>
+				</ul>
 
-			<!-- Fake Sphere example -->
+				<!-- Fake Sphere example -->
 
-			<div id="floating-container">
-				<h4 id="floating-title">Drag inside the box from left to right</h4>
-				<div class="box floating-box"></div>
-				<div class="box floating-box"></div>
-				<div class="box floating-box"></div>
-				<div class="box floating-box"></div>
-			</div>
-		</section>
+				<div id="floating-container">
+					<h4 id="floating-title">Drag inside the box from left to right</h4>
+					<div class="box floating-box"></div>
+					<div class="box floating-box"></div>
+					<div class="box floating-box"></div>
+					<div class="box floating-box"></div>
+				</div>
+				<p>Even this simple example took a while to implement, with no shortage of issues. A poor developer experience, with no guidance for much design inspiration</p>
+			</section>
+
+			<section id="section-motion-api">
+				<h2>Example 2: Motion</h2>
+				<p class="motion-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis, a sunt accusamus at voluptates praesentium, eos fugiat dolorum debitis cumque nostrum magnam rem, dolor minima facere doloribus labore illum velit.</p>
+				<p class="motion-text">Wow ok... playing around and comparing this to requestAnimationFrame is night and day. The api actually servces things you want to do in a website. Even little things like useable defaults (e.g. ease and standard durations) makes this so addictive to use. It also makes devlopment super quick, which is super necessary for creative tasks</p>
+				<p class="motion-text">Uses all the most 'native' api's it can, for instance <code>intersection Observer</code>, it sets up the most useful event listeners for pressing (on start, release, and even info about cancel,) which makes this so versatile for big page animations all the way to buttons.</p>
+				<p class="motion-text">This only adds to a skillset if you desire working with css for as much as you can for animations. It is a no-fuss way to implement useable css. Need to not get addicted to using this.</p>
+				
+				<div id="section-in-view">
+					<div class="in-view-box"></div>
+					<div class="in-view-box"></div>
+					<div class="in-view-box"></div>
+					<div class="in-view-box"></div>
+				</div>
+
+			<p class="motion-text">The animation on this page is using vanilla JS. Which means the flow is: grabbing objects from DOM and 'attaching' animations to them in the JavaScript file. This flow makes a lot of sense, since an element's animation is part of it's identity and role in the webpage.</p>
+			<p class="motion-text">Even these paragraph elements are 'auto-animated' as I copy and paste <code>class="motion-text"</code> For new paragraphs</p>
+			<p class="motion-text">Apparently this philosophy also applies to react, so will be interesting to see how that works. Otherwise, this is such an easy way to think about animations for Vanilla JS</p>
+			</section>
+
+			<section id="section-animate-api">
+				<h2>Example 3: Animate api</h2>
+				<p class="animate-text">So the animate api is like the 'main' native api of the motion package. It's very similar in terms of:</p>
+				<ul>
+					<li class="animate-text">defining animation start end states</li>
+					<li class="animate-text">applying native css</li>
+					<li class="animate-text">allowing for easing</li>
+				</ul>
+				<p class="animate-text">I'm surprised and pleased to hear that it's possible to get very close results to motion with a native feel</p>
+				<p class="animate-text">That said, the developer experience took a lot longer than motion to get set up. Mainly because we have to set up our own intersection observer instead of motion's <code>inView</code> animations. It's just an extra step of setup, and every new element you'll want to animate has to be added to the intersection observer.</p>
+				<p class="animate-text">The main loss though is just losing access to the 'fastness' of it - no physics-powered spring with easy option setup, one line inView setup. But this is infinitely better and easier to wrap your head round than request Animation Frame.</p>
+				<p class="animate-text">Using these for the first time though, I now understand that Motion is just a very nice and considered api on top of this native animate method (at least for vanilla JS).</p>
+			</section>
+
+			<!-- TODO: - compare api to motion? e.g. array of keyframes: object of styles at 0%, 100% etc. vs one object with array values. Animate is a method on the object, vs it's own method (I imagine this way it like adds event listeners / observers etc.)-->
+			<!-- TODO: - talk about how good Intersection Observer actually is: a useful amount of data and a good api. Just another step -->
+			<section id="section-css">
+				<h2>Example 4: Pure CSS</h2>
+				<p>todo hehe</p>
+			</section>
+
+			<!-- TODO: - defining animations vs triggering animations? Has to happen in JS anyway or what can CSS do? -->
+
+			<!-- TODO: how to implement dragging? Set up with event listeners etc.? -->
+
+			<section id="section-conclusion">
+				<h2>Conclusion</h3>
+				<p>The point of doing this was just to know what's out there in terms of animation power, and to start to wrap my head around what happens under the surface of each technique.</p>
+				<p>I'm pleasantly surprised to learn that there's some real performant, relatively native solutions that give you what you need for your key animation needs. Mainly fading and animating into view, looping animations, svg animation, staggered animation. These feel like the cornerstone animated elements of the web (portfolio OR enterprise application.)</p>
+				<p>For the sake of wanting to learn native JavaScript no shortcuts, and reducing bundle size, I think I'm gonna try and spend some time getting to grips with animate() api, and gritting my teeth through setting up Intersection Observers.</p>
+				
+			</section>
+		</article>
 	</main>
 </body>
 </html>

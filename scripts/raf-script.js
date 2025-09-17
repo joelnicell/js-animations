@@ -28,6 +28,13 @@ class Vector {
   }
 }
 
+// instead, floating should be:
+// keep a drag variable for ui 'turning'
+// snap to one of 4 positions that we keep track of.
+// phase = 0, PI/2, PI, 3PI/2
+
+let state = 0;
+
 let pressed = false;
 let start = new Vector();
 let drag = new Vector();
@@ -72,7 +79,6 @@ document.addEventListener('mousemove', (e) => mouseMove(e));
 function oscillate(t) {
   const value = Math.sin(t * 0.001) * 40 + 100;
   boxOne.style.width = `${value}px`;
-  buttonOne.style.transform = `translateX(${value}px)`;
 }
 
 function floating(t) {
@@ -85,17 +91,17 @@ function floating(t) {
   }
   
   floatingBoxes.forEach((box, index) => {
-    const phase = (t * 0.0002) + ((drag.x - vel.x) / 100) + (index / floatingBoxesLength) * Math.PI * 2;
+    const phase = (index / floatingBoxesLength + state + drag.x + vel.x) * Math.PI * 2;
     const xPos = Math.sin(phase) * 80;
     const yPos = Math.cos(phase) * 30 * ((drag.y - vel.y) * 0.01 + 1);
     box.style.transform = `translate(${xPos}px, ${yPos}px)`;
   })
 }
 
-function animate(t) {
+function raf(t) {
   oscillate(t);
   floating(t);
-  requestAnimationFrame(animate);
+  requestAnimationFrame(raf);
 }
 
-requestAnimationFrame(animate);
+requestAnimationFrame(raf);

@@ -18,7 +18,7 @@ const observerCallback = (entries, observer) => {
         // object of properties
         {
           duration: 1000, // milliseconds
-          easing: 'ease-in-out', // standard easing, or apply cubic-bezier here
+          easing: 'cubic-bezier(0,0.51,0,1)', // standard easing, or apply cubic-bezier here
           fill: 'forwards', // Retain the final state after the animation
         }
       );

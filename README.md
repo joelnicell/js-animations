@@ -1,4 +1,4 @@
-# JS Animations Playground
+# Animations Playground
 
 This project is a simple webpage designed as a playground to experiment with various animation techniques for the web. Since I needed content to test each of these approach out on, I decided to share my thoughts directly in this document. Each section's animations are powered by the technique that I am discussing in that section.
 

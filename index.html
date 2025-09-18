@@ -31,20 +31,14 @@
 				<p>In this example, a box div is having it's css style attribute updated by an animation loop from values calculated inside requestAnimationFrame</p>
 				<div class="box example-one" id="box-eg-one"></div>
 				<p>Here is the code snippet:</p>
-				<pre>
-					<code class="code-snippet">
-							const box = document.getElementById("box");
-			
-							let value = 0;
-							function animate(t) {
-								value = Math.sin(t * 0.001) * 40 + 100;
-								box.style.width = `${value}px`;
-								requestAnimationFrame((t) => animate(t))
-							}
-			
-							animate();
-					</code>
-				</pre>
+				<pre class="code-block"><code>const box = document.getElementById("box");
+let value = 0;
+function animate(t) {
+	value = Math.sin(t * 0.001) * 40 + 100;
+	box.style.width = `${value}px`;
+	requestAnimationFrame((t) => animate(t))
+}
+animate();</code></pre>
 				<p>This seems to be the most 'low-level' approach, in that, most other update methods tap into the <code>requestAnimationFrame</code> architecture. </p>
 				<p>Upon attempting some simple examples with this approach, it became obvious that this is NOT a very ideal approach. You are keeping animation variables and state inside of Javascript, and unless you are actively using JavaScript for calculations, this is definitely a pain.</p>
 				<p>Incredibly, I originally thought this was an effective method of doing animations. However since this approach is just raw numbers manipulating css, it's not very inspiring, or intuitive, just a more difficult way to do css.</p>
@@ -135,22 +129,20 @@
 					<li class="css-animation">Whether you want to declare animations to be re-used.</li>
 				</ol>
 				<p class="css-animation">The <code>IntersectionObserver</code> code is maybe even cleaner than the animate api, since JS is responsible for defining WHEN, then we use css utility classes to define the WHAT:</p>
-				<pre><code>
-					const observerCallback = (entries, observer) => {
-						entries.forEach((entry) => {
-							if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-								entry.target.classList.add('animated');
-								observer.unobserve(entry.target);
-							}
-						})
-					}
+				<pre class="code-block"><code>const observerCallback = (entries, observer) => {
+	entries.forEach((entry) => {
+		if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+			entry.target.classList.add('animated');
+			observer.unobserve(entry.target);
+		}
+	})
+}
 
-					const observer = new IntersectionObserver(observerCallback, observerOptions);
+const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-					cssText.forEach(element => {
-						observer.observe(element);
-					})
-				</code></pre>
+cssText.forEach(element => {
+	observer.observe(element);
+})</code></pre>
 			</section>
 
 			<!-- TODO: how to implement dragging? Set up with event listeners etc.? -->

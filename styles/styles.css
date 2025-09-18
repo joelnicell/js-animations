@@ -53,12 +53,7 @@ h3 {
   background: red;
 }
 
-main {
-  width: 100vw;
-}
-
 article {
-  /* width: 100%; */
   max-width: 720px;
   margin: 0 auto 20rem auto;
   padding: 0 3rem;
@@ -132,4 +127,21 @@ button {
 .animate-text {
   opacity: 0;
   transform: translate(-20px, 0);
+}
+
+.code-block {
+  display: block;
+  margin: 0;
+  margin-bottom: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.05);
+  box-shadow: 0 6px 12px rgba(255,255,255,0.1), 0 2px 3px rgba(255,255,255,0.1);
+  white-space: pre;
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-size: 0.9rem;
 }

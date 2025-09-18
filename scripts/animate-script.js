@@ -1,7 +1,7 @@
 // import { animate } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
 const animateText = document.querySelectorAll(".animate-text");
 
-const observerOptions = {
+export const observerOptions = {
   root: null, // Use the viewport as the root
   rootMargin: '0px 0px -150px 0px',
 }
@@ -9,7 +9,6 @@ const observerOptions = {
 const observerCallback = (entries, observer) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      console.log('is intersecting!', entry);
       entry.target.animate(
         [
           { opacity: 0, transform: 'translate(-20px, 0)' }, // From

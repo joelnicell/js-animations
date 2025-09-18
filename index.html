@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-		<!-- <script type="module">
-			import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm"
-		</script> -->
     <script src="./scripts/raf-script.js" defer type="module"></script>
     <script src="./scripts/motion-script.js" defer type="module"></script>
     <script src="./scripts/animate-script.js" defer type="module"></script>
+    <script src="./scripts/other.js" defer type="module"></script>
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -100,35 +98,68 @@
 
 			<section id="section-animate-api">
 				<h2>Example 3: Animate api</h2>
-				<p class="animate-text">So the animate api is like the 'main' native api of the motion package. It's very similar in terms of:</p>
+				<p class="animate-text animate">So the animate api is like the 'main' native api of the motion package. It's very similar in terms of:</p>
 				<ul>
-					<li class="animate-text">defining animation start end states</li>
-					<li class="animate-text">applying native css</li>
-					<li class="animate-text">allowing for easing</li>
+					<li class="animate-text animate">defining animation start end states</li>
+					<li class="animate-text animate">applying native css</li>
+					<li class="animate-text animate">allowing for easing</li>
 				</ul>
-				<p class="animate-text">I'm surprised and pleased to see that it's possible to get very close results to motion with a native feel. The native <code>animate</code> api has a similar philosophy about it.</p>
-				<p class="animate-text">That said, the developer experience took a lot longer than motion to get set up. Mainly because we have to set up our own intersection observer instead of motion's <code>inView</code> animations. It's just an extra step of setup, and every new element you'll want to animate has to be added to the intersection observer.</p>
-				<p class="animate-text">The main loss though is just losing access to the 'fastness' of it - no physics-powered spring with easy option setup, one line inView setup. But this is infinitely better and easier to wrap your head round than request Animation Frame.</p>
-				<p class="animate-text">Using these for the first time though, I now understand that Motion is just a very nice and considered api on top of this native animate method (at least for vanilla JS).</p>
+				<p class="animate-text animate">I'm surprised and pleased to see that it's possible to get very close results to motion with a native feel. The native <code>animate</code> api has a similar philosophy about it.</p>
+				<p class="animate-text animate">That said, the developer experience took a lot longer than motion to get set up. Mainly because we have to set up our own intersection observer instead of motion's <code>inView</code> animations. It's just an extra step of setup, and every new element you'll want to animate has to be added to the intersection observer.</p>
+				<p class="animate-text animate">The main loss though is just losing access to the 'fastness' of it - no physics-powered spring with easy option setup, one line inView setup. But this is infinitely better and easier to wrap your head round than request Animation Frame.</p>
+				<p class="animate-text animate">Using these for the first time though, I now understand that Motion is just a very nice and considered api on top of this native animate method (at least for vanilla JS).</p>
 			</section>
 
 			<!-- TODO: - compare api to motion? e.g. array of keyframes: object of styles at 0%, 100% etc. vs one object with array values. Animate is a method on the object, vs it's own method (I imagine this way it like adds event listeners / observers etc.)-->
 			<!-- TODO: - talk about how good Intersection Observer actually is: a useful amount of data and a good api. Just another step -->
 			<section id="section-css">
 				<h2>Example 4: Pure CSS</h2>
-				<p>todo hehe</p>
-			</section>
+				<p class="css-animation">Exploring this in a bit more detail has been interesting. I've never really used css animations, I've only really dipped by toes in transitions, and didn't know the difference.</p>
+				<p class="css-animation" id="css-toggle-p">Transitions seem to be responsible for how the browser responds to dynamically changing properties. For instance if you click the paragraph, we can toggle a transform state, and let css control it. Transitions have their own css properties (e.g. <code>transition property</code>, <code>transition-timing-function</code> etc.)</p>
+				<p class="css-animation">Whilst animations are about <strong>defining and declaring</strong> an animation object using <code>@keyframes</code>. You then have control over how that animation 'runs' in each element that uses it (via <code>animation-name</code> and the animation sub-properties.)</p>
+				<p class="css-animation">This seems to be where css's role ends - declaration and attaching via classes. The lifecycle of animations in css is purely:</p>
+				<ul>
+					<li class="css-animation animated">First page load, trigger animation once</li>
+					<li class="css-animation animated">Infinite animations (e.g. spinning or pulsing etc.)</li>
+				</ul>
+				<p class="css-animation">(refresh the page to see ^ these ^ elements only animate on reload.)</p>
+				<p class="css-animation">The animation objects we've just set up can be 'observed' inside of JavaScript. But then once we're in JavaScript world, we have to set up event listeners and stuff anyway.</p>
+				<p class="css-animation">The differences between this approach and the animate api are:</p>
+				<ul>
+					<li class="css-animation">We're <strong>defining</strong> animations inside of css. This means we can re-use them across multiple elements. Instead of being imperitive in JavaScript.</li>
+					<li class="css-animation">Animations api gives you greater access to events, playback and can listen to promises etc. whilst css animation object is smaller. Both can be observed in JavaScript.</li>
+				</ul>
+				<p class="css-animation">Otherwise they're very similar. Performance is great on both. Choosing between them comes down to:</p>
+				<ol>
+					<li class="css-animation">Choosing between effectively a 'lite' version and 'full' version of event control.</li>
+					<li class="css-animation">Whether you want to declare animations to be re-used.</li>
+				</ol>
+				<p class="css-animation">The <code>IntersectionObserver</code> code is maybe even cleaner than the animate api, since JS is responsible for defining WHEN, then we use css utility classes to define the WHAT:</p>
+				<pre><code>
+					const observerCallback = (entries, observer) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+								entry.target.classList.add('animated');
+								observer.unobserve(entry.target);
+							}
+						})
+					}
 
-			<!-- TODO: - defining animations vs triggering animations? Has to happen in JS anyway or what can CSS do? -->
+					const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+					cssText.forEach(element => {
+						observer.observe(element);
+					})
+				</code></pre>
+			</section>
 
 			<!-- TODO: how to implement dragging? Set up with event listeners etc.? -->
 
 			<section id="section-conclusion">
 				<h2>Conclusion</h3>
 				<p>The point of doing this was just to know what's out there in terms of animation power, and to start to wrap my head around what happens under the surface of each technique.</p>
-				<p>I'm pleasantly surprised to learn that there's some real performant, relatively native solutions that give you what you need for your key animation needs. Mainly fading and animating into view, looping animations, svg animation, staggered animation. These feel like the cornerstone animated elements of the web (portfolio OR enterprise application.)</p>
-				<p>For the sake of wanting to learn native JavaScript no shortcuts, and reducing bundle size, I think I'm gonna try and spend some time getting to grips with animate() api, and gritting my teeth through setting up Intersection Observers.</p>
-				
+				<p>I'm pleasantly surprised to learn that even native solutions can get you really far for what most websites / portfolios need. Mainly fading and animating into view, looping animations, svg animation, staggered animation.</p>
+				<p><strong>Intersection Observers</strong> are necessary for all these animations. In pure solutions, they will always have to be set up manually in JS for triggering animation. Unless you are using motion, in which case there is a nice api wrapper around it.</p>
 			</section>
 		</article>
 	</main>
